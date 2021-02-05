@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.viewpager2.widget.ViewPager2
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
@@ -15,10 +16,15 @@ class MainActivity : AppCompatActivity(), NewsItemClicked {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        recyclerView.layoutManager = LinearLayoutManager(this)
-         fetchData()
-         mAdapter = NewsListAdapter(this)
-        recyclerView.adapter = mAdapter
+        this.supportActionBar?.hide()
+//        recyclerView.layoutManager = LinearLayoutManager(this)
+//         fetchData()
+//         mAdapter = NewsListAdapter(this)
+//        recyclerView.adapter = mAdapter
+                viewPager.orientation = ViewPager2.ORIENTATION_VERTICAL
+        fetchData()
+        mAdapter = NewsListAdapter(this)
+        viewPager.adapter = mAdapter
     }
     private fun fetchData() {
         val url =
@@ -38,7 +44,9 @@ class MainActivity : AppCompatActivity(), NewsItemClicked {
                         newsJsonObject.getString("title"),
                         newsJsonObject.getString("author"),
                         newsJsonObject.getString("url"),
-                        newsJsonObject.getString("urlToImage")
+                        newsJsonObject.getString("urlToImage"),
+                        newsJsonObject.getString("description"),
+
                     )
                     newsArray.add(news)
                 }
